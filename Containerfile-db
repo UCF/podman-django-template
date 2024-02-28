@@ -1,0 +1,12 @@
+# Mac/Windows/Linux x86
+# FROM mysql:8.3
+
+# Mac M-Series
+FROM arm64v8/mysql
+
+
+ENV MYSQL_DATABASE helloworld
+ENV MYSQL_ROOT_PASSWORD password
+
+ADD ./setup.sql /docker-entrypoint-initdb.d
+

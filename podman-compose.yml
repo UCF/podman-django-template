@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db: 
+    build:
+      dockerfile: Containerfile-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: helloworld
+
+  web:
+    build:
+      dockerfile: Containerfile-web
+    ports:
+      - "8004:8000"
+    depends_on:
+      - db
