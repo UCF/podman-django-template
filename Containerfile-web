@@ -1,6 +1,6 @@
 
 # Mac/Windows/Linux x86
- FROM python:3.12
+FROM python:3.12
 
 # Mac M-Series
 # FROM arm64v8/python:3.12
@@ -13,7 +13,7 @@ COPY requirements.txt /app/
 
 RUN pip install -r requirements.txt
 
-COPY . /app/
+COPY ./helloworld /app/
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
