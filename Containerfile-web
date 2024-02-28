@@ -1,9 +1,9 @@
 
 # Mac/Windows/Linux x86
-# FROM python:3.12
+ FROM python:3.12
 
 # Mac M-Series
-FROM arm64v8/python:3.12
+# FROM arm64v8/python:3.12
 
 ENV PYTHONUNBUFFERED 1
 
