@@ -6,7 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: helloworld
-    ports:
+    ports::wq
+
       - "3306:3306"
 
   web:
