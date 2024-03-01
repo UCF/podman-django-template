@@ -11,9 +11,21 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import environ 
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PARENT_DIR = Path(__file__).resolve().parent
+
+# Take the environment variables from .env file
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# print("All Environment variables:", os.environ)
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,7 +35,8 @@ BASE_DIR = Path(__file__).resolve().parent
 SECRET_KEY = 'django-insecure-_i_xqo-9_5%du03@lxqtkk&11r*21=y$tl()u#cd@eo55dh3-@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Debug set in .env
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -74,10 +87,18 @@ WSGI_APPLICATION = 'helloworld.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Database settings moved to .env files
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+	    'NAME': env('NAME'),
+	    'USER': env('USER'),
+	    'PASSWORD': env('PASSWORD'),
+	    'HOST': env('HOST'),
+	    'PORT': env('PORT'),
+	},
     }
 }
 
