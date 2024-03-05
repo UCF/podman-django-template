@@ -1,14 +1,15 @@
 version: '3'
 services:
-  db: 
+  mysql: 
     build:
       dockerfile: Containerfile-db
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: helloworld
-    ports::wq
-
-      - "3306:3306"
+    ports:
+      - "3307:3306"
+    volumes:
+      - /var/lib/mysql
 
   web:
     build:
@@ -16,4 +17,4 @@ services:
     ports:
       - "8004:8000"
     depends_on:
-      - db
+      - mysql
