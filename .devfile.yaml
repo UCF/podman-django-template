@@ -1,0 +1,28 @@
+components:
+- image:
+    autoBuild: true
+    dockerfile:
+      buildContext: .
+      rootRequired: false
+      uri: Containerfile-db
+    imageName: mysql
+  name: mysqlimage
+- container:
+    image: mysql
+  name: mysql
+- image:
+    autoBuild: true
+    dockerfile:
+      buildContext: .
+      rootRequired: false
+      uri: Containerfile-web
+    imageName: web
+  name: webimage
+- container:
+    image: web
+  name: web
+metadata:
+  description: A template for setting up a Django-MySQL application
+  name: helloworld
+  version: 0.0.1
+schemaVersion: 2.2.0
