@@ -4,8 +4,10 @@ services:
     build:
       dockerfile: Containerfile-db
     environment:
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: mysql
+      MYSQL_DATABASE: mydatabase
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     ports:

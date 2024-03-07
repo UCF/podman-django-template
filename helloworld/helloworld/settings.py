@@ -87,12 +87,12 @@ WSGI_APPLICATION = 'helloworld.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-	'NAME': os.getenv('DB_NAME', 'mysql'),	
+	'NAME': os.getenv('DB_NAME', 'mydatabase'),	
         'USER': os.getenv('DB_USER', 'myuser'),
 	'PASSWORD': os.getenv('DB_PASSWORD', 'mypassword'),
 	'HOST': os.getenv('DB_HOST', 'mysql'),
-	'PORT': os.getenv('DB_PORT', 3307),
-	}
+	'PORT': os.getenv('DB_PORT', 3306),
+    }
 }
 
 
