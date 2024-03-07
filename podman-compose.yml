@@ -5,11 +5,18 @@ services:
       dockerfile: Containerfile-db
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: helloworld
+      MYSQL_DATABASE: mysql
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
     ports:
       - "3307:3306"
     volumes:
       - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:3306"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   web:
     build:
@@ -17,4 +24,5 @@ services:
     ports:
       - "8004:8000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy

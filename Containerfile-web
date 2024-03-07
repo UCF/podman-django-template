@@ -15,8 +15,4 @@ RUN pip install -r requirements.txt
 
 COPY ./helloworld /app/
 
-COPY startup.sh .
-
-RUN chmod +x startup.sh
-
-ENTRYPOINT ["./startup.sh"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
