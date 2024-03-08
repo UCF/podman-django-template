@@ -34,7 +34,7 @@ Run the `podman compose build` command from the directory holding this repositor
 ### Finally:
 Run the `podman compose up` command from the directory holding this repository.
 
-`podman compose up'
+`podman compose up`
 
 ### Test that the application works by going to localhost:8004
 
