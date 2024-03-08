@@ -40,7 +40,7 @@ Run the `podman compose up` command from the directory holding this repository.
 
 ## Troubleshooting
 
-If the podman compose up command hangs after the database container is spun up for more than 10 seconds, cancel it [press Ctrl+C]. Redo the command. 
+If the `podman compose up` command hangs for more than 10 seconds after the database container is spun up, cancel it [press Ctrl+C]. Redo the command. 
 
 If the `podman compose up` command does not work, check that you are in the directory with the podman-compose.yml file
 

@@ -1,28 +1,40 @@
-components:
-- image:
-    autoBuild: true
-    dockerfile:
-      buildContext: .
-      rootRequired: false
-      uri: Containerfile-db
-    imageName: mysql
-  name: mysqlimage
-- container:
-    image: mysql
-  name: mysql
-- image:
-    autoBuild: true
-    dockerfile:
-      buildContext: .
-      rootRequired: false
-      uri: Containerfile-web
-    imageName: web
-  name: webimage
-- container:
-    image: web
-  name: web
+schemaVersion: 2.2.0
 metadata:
   description: A template for setting up a Django-MySQL application
-  name: helloworld
+  name: template
   version: 0.0.1
-schemaVersion: 2.2.0
+components:
+  - name: mysqlimage
+    image:
+      autoBuild: true
+      dockerfile:
+        buildContext: .
+        rootRequired: false
+        uri: Containerfile-db
+      imageName: mysqlimage
+  - name: mysql
+    container:
+      image: mysqlimage
+      endpoints:
+      - name: http-3306
+        targetPort: 3306
+    attributes:
+      container-overrides:
+        imagePullPolicy: Never
+  - name: webimage
+    image:
+      autoBuild: true
+      dockerfile:
+        buildContext: .
+        rootRequired: false
+        uri: Containerfile-web
+      imageName: webimage
+  - name: web
+    container:
+      image: webimage
+      endpoints:
+      - name: http-8000
+        targetPort: 8000
+    attributes:
+      container-overrides:
+        imagePullPolicy: Never
