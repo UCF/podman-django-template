@@ -1,6 +1,6 @@
-# Podman-Django-MySQL Hello World!
+# Podman-Django-MySQL Template
 
-## A Hello World Django web application connected to a MySQL database containerized in podman and composed with podman-compose
+## A Template Django web application connected to a MySQL database containerized in podman and composed with podman-compose. The Django documentation's tutorial application is included as an example. Soon to include Odo support for local development. 
 
 ### First:
 Pull this repository.
@@ -34,7 +34,7 @@ Run the `podman compose build` command from the directory holding this repositor
 ### Finally:
 Run the `podman compose up` command from the directory holding this repository.
 
-`podman compose up'
+`podman compose up`
 
 ### Test that the application works by going to localhost:8004
 
