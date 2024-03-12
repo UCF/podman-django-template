@@ -85,6 +85,15 @@ jobs:
         docker build -f Containerfile-web -t $ECR_REGISTRY/$REGISTRY_ALIAS/$WEB_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$WEB_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$REGISTRY_ALIAS/$WEB_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Build, tag, and push image to Amazon ECR Public
+      id: build-image-db
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+        REGISTRY_ALIAS: j2a5t6s3
+        IMAGE_TAG: ${{ github.sha }}
+
+      run: |
         docker build -f Containerfile-db -t $ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
@@ -103,7 +112,7 @@ jobs:
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.DB_CONTAINER_NAME }}
-        image: ${{ steps.build-image.outputs.image }}
+        image: ${{ steps.build-image-db.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
