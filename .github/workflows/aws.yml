@@ -62,7 +62,7 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE }}
         role-session-name: GithubActionsCD
         aws-region: us-east-1
-	audience: sts.amazonaws.com
+        audience: sts.amazonaws.com
 
     - name: Login to Amazon ECR
       id: login-ecr
