@@ -34,6 +34,8 @@ on:
 
 env:
   AWS_REGION: us-east-1                   # set this to your preferred AWS region, e.g. us-west-1
+  WEB_REPOSITORY: template-web
+  DB_REPOSITORY: template-db
   ECS_SERVICE: template                 # set this to your Amazon ECS service name
   ECS_CLUSTER: DevCluster                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json # set this to the path to your Amazon ECS task definition
@@ -74,8 +76,6 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         REGISTRY_ALIAS: j2a5t6s3
-        WEB_REPOSITORY: template-web
-        DB_REPOSITORY: template-db	
         IMAGE_TAG: ${{ github.sha }}
 
       run: |
