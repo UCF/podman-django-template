@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mysql: 
+  template-db: 
     build:
       dockerfile: Containerfile-db
     environment:
@@ -20,11 +20,11 @@ services:
       timeout: 10s
       retries: 5
 
-  web:
+  template-web:
     build:
       dockerfile: Containerfile-web
     ports:
       - "8004:8000"
     depends_on:
-      mysql:
+      template-db:
         condition: service_healthy
