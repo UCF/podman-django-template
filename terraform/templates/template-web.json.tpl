@@ -1,13 +1,13 @@
 [
   {
-    "name": "template",
+    "name": "template-web",
     "image": ${docker_image_url_django}",
-    "essential" : true,
+    "essential": true,
     "cpu": 10,
     "memory": 512,
     "portMappings": [
       {
-        "containerPort":8000,
+        "containerPort": 8000,
         "protocol": "tcp"
       }
     ],

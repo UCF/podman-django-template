@@ -27,7 +27,7 @@ resource "aws_security_group" "load-balancer" {
 }
 
 # ECS Fargate Security group (traffic ALB -> ECS Fargate Tasks)
-resource "aws_security_group" "ecs_fargate" {
+resource "aws_security_group" "ecs-fargate" {
   name        = "ecs_fargate_security_group"
   description = "Allows inbound access from the ALB only"
   vpc_id      = aws_vpc.dev-vpc.id
