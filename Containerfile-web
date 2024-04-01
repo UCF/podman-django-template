@@ -10,6 +10,10 @@ FROM python:3.12
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
+# apt-get update + vim install for editing
+RUN yes | apt-get update && yes | apt-get upgrade
+RUN yes | apt-get install vim
+
 # Install dependencies
 WORKDIR /app
 RUN pip install --upgrade pip
@@ -21,5 +25,9 @@ COPY ./template /app/
 
 RUN python3 manage.py makemigrations polls
 
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Copy wait-for-it
+COPY wait-for-it.sh wait-for-it.sh
+RUN chmod +x wait-for-it.sh
+
+CMD ["./wait-for-it.sh", "localhost:3306", "--timeout=30", "--", "sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
 

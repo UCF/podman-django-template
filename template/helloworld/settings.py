@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+import sys
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -88,13 +89,14 @@ WSGI_APPLICATION = 'helloworld.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-	'NAME': os.getenv('DB_NAME', 'mydatabase'),	
+        'NAME': os.getenv('DB_NAME', 'mydatabase'),	
         'USER': os.getenv('DB_USER', 'myuser'),
-	'PASSWORD': os.getenv('DB_PASSWORD', 'mypassword'),
-	'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'mypassword'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
 	'PORT': os.getenv('DB_PORT', 3306),
-    }
+    },
 }
+
 
 
 
