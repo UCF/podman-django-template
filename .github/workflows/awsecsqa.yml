@@ -54,6 +54,7 @@ jobs:
     steps:
     - name: Create .env
       run: | 
+        touch template/helloworld/.env
         echo "DEBUG=False" >> template/helloworld/.env
         echo "DB_NAME=template-db-qa" >> template/helloworld/.env
         echo "DB_USER=${{ secrets.QA_USER }}" >> template/helloworld/.env
