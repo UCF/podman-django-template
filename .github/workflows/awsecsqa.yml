@@ -57,10 +57,10 @@ jobs:
       with:
         envkey_DEBUG: False
         envkey_DB_NAME: template-db-qa
-        envkey_DB_USER=${{ secrets.QA_USER }}
-        envkey_DB_PASSWORD=${{ secrets.QA_PASSWORD }} 
-        envkey_DB_HOST=${{ secrets.QA_HOST }}
-        envkey_DB_PORT=3306
+        envkey_DB_USER: ${{ secrets.QA_USER }}
+        envkey_DB_PASSWORD: ${{ secrets.QA_PASSWORD }} 
+        envkey_DB_HOST: ${{ secrets.QA_HOST }}
+        envkey_DB_PORT: 3306
         directory: template/helloworld
 
     - name: Checkout
