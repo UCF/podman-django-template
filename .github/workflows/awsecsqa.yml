@@ -54,7 +54,7 @@ jobs:
     steps:
     - name: Make envfile
       uses: SpicyPizza/create-envfile@v2.0 
-      with"
+      with:
         envkey_DEBUG: False
         envkey_DB_NAME: template-db-qa
         envkey_DB_USER=${{ secrets.QA_USER }}
