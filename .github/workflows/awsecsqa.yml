@@ -24,7 +24,7 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS Dev Cluster
+name: Deploy to Amazon ECS QA Cluster
 
 on:
   push:
@@ -83,8 +83,13 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         REGISTRY_ALIAS: j2a5t6s3
-        IMAGE_TAG: ${{ github.sha }}
-
+        IMAGE_TAG: ${{ github.sha }} 
+        DEBUG: False
+        DB_NAME: template-db-qa
+        DB_USER: ${{ secrets.QA_USER }}
+        DB_PASSWORD: ${{ secrets.QA_PASSWORD }}
+        DB_HOST: ${{ secrets.QA_HOST }}
+        DB_PORT: 3306
       run: |
         # Build a docker container and
         # push it to ECR so that it can
