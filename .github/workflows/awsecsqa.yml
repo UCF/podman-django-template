@@ -52,14 +52,16 @@ jobs:
     environment: qa
 
     steps:
-    - name: Generate Github env variables 
-      run: |
-        echo "DEBUG=False" > $GITHUB_ENV
-        echo "DB_NAME=template-db-qa" >> $GITHUB_ENV
-        echo "DB_USER=${{ secrets.QA_USER }}" >> $GITHUB_ENV
-        echo "DB_PASSWORD=${{ secrets.QA_PASSWORD }} >> $GITHUB_ENV
-        echo "DB_HOST=${{ secrets.QA_HOST }} >> $GITHUB_ENV
-        echo "DB_PORT=3306" >> $GITHUB_ENV
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v2.0 
+      with"
+        envkey_DEBUG: False
+        envkey_DB_NAME: template-db-qa
+        envkey_DB_USER=${{ secrets.QA_USER }}
+        envkey_DB_PASSWORD=${{ secrets.QA_PASSWORD }} 
+        envkey_DB_HOST=${{ secrets.QA_HOST }}
+        envkey_DB_PORT=3306
+        directory: template/helloworld
 
     - name: Checkout
       uses: actions/checkout@v3
