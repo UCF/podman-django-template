@@ -60,7 +60,7 @@ jobs:
         mkdir -p ${{ github.workspace }}/template/helloworld/
         touch ${{ github.workspace }}/template/helloworld/.env
         echo "DEBUG=False" >> ${{ github.workspace }}/template/helloworld/.env
-        echo "DB_NAME=template-db-qa" >> ${{ github.workspace }}/template/helloworld/.env
+        echo "DB_NAME=template-qa-db" >> ${{ github.workspace }}/template/helloworld/.env
         echo "DB_USER=${{ secrets.QA_USER }}" >> ${{ github.workspace }}/template/helloworld/.env
         echo "DB_PASSWORD=${{ secrets.QA_PASSWORD }}" >> ${{ github.workspace }}/template/helloworld/.env 
         echo "DB_HOST=${{ secrets.QA_HOST }}" >> ${{ github.workspace }}/template/helloworld/.env
