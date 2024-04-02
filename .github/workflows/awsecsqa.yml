@@ -54,13 +54,13 @@ jobs:
     steps:
     - name: Create .env
       run: | 
-        touch template/helloworld/.env
-        echo "DEBUG=False" >> template/helloworld/.env
-        echo "DB_NAME=template-db-qa" >> template/helloworld/.env
-        echo "DB_USER=${{ secrets.QA_USER }}" >> template/helloworld/.env
-        echo "DB_PASSWORD=${{ secrets.QA_PASSWORD }}" >> template/helloworld/.env 
-        echo "DB_HOST=${{ secrets.QA_HOST }}" >> template/helloworld/.env
-        echo "DB_PORT=3306" >> template/helloworld/.env
+        touch ${{ github.workspace }}/template/helloworld/.env
+        echo "DEBUG=False" >> ${{ github.workspace }}/template/helloworld/.env
+        echo "DB_NAME=template-db-qa" >> ${{ github.workspace }}/template/helloworld/.env
+        echo "DB_USER=${{ secrets.QA_USER }}" >> ${{ github.workspace }}/template/helloworld/.env
+        echo "DB_PASSWORD=${{ secrets.QA_PASSWORD }}" >> ${{ github.workspace }}/template/helloworld/.env 
+        echo "DB_HOST=${{ secrets.QA_HOST }}" >> ${{ github.workspace }}/template/helloworld/.env
+        echo "DB_PORT=3306" >> ${{ github.workspace}}/template/helloworld/.env
 
     - name: Checkout
       uses: actions/checkout@v3
