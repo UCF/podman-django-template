@@ -54,6 +54,7 @@ jobs:
     steps:
     - name: Create .env
       run: | 
+        mkdir -p ${{ github.workspace }}/template/helloworld/
         touch ${{ github.workspace }}/template/helloworld/.env
         echo "DEBUG=False" >> ${{ github.workspace }}/template/helloworld/.env
         echo "DB_NAME=template-db-qa" >> ${{ github.workspace }}/template/helloworld/.env
