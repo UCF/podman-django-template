@@ -32,6 +32,10 @@ components:
   - name: web
     container:
       image: webimage
+      command: ['/bin/sh']
+      args:
+      - -c
+      - 'until python3 -c "import socket; exit(0) if 0 == socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect_ex((''127.0.0.1'',3306)) else exit(1)"; do echo Waiting for DB; sleep 2; done && python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
       endpoints:
       - name: http-8000
         targetPort: 8000
