@@ -18,6 +18,17 @@ components:
       endpoints:
       - name: http-3306
         targetPort: 3306
+      env:
+      - name: MYSQL_HOST
+        value: localhost
+      - name: MYSQL_ROOT_PASSWORD
+        value: password
+      - name: MYSQL_DATABASE
+        value: mydatabase
+      - name: MYSQL_USER
+        value: myuser
+      - name: MYSQL_PASSWORD
+        value: mypassword
     attributes:
       container-overrides:
         imagePullPolicy: Never

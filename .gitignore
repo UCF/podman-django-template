@@ -1,3 +1,5 @@
 /template/helloworld/__pycache__
 /template/helloworld/.env
 /terraform/.terraform/
+
+.odo
