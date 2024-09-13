@@ -56,6 +56,6 @@ jobs:
           STATIC_URL: ${{ secrets.STATIC_URL }}
           STATIC_ROOT: ${{ secrets.STATIC_ROOT }}
         run: |
-          podman build -f Containerfile -t template-dev .
+          podman build -f Containerfile-web -t template-dev .
           podman tag template-dev:latest 654654512735.dkr.ecr.us-east-1.amazonaws.com/template-dev:latest
           podman push 654654512735.dkr.ecr.us-east-1.amazonaws.com/template-dev:latest
