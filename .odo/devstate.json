@@ -1,5 +1,25 @@
 {
- "pid": 0,
- "platform": "",
- "forwardedPorts": null
+ "pid": 15389,
+ "platform": "podman",
+ "forwardedPorts": [
+  {
+   "platform": "podman",
+   "containerName": "mysql",
+   "portName": "http-3306",
+   "isDebug": false,
+   "localAddress": "127.0.0.1",
+   "localPort": 20001,
+   "containerPort": 3306
+  },
+  {
+   "platform": "podman",
+   "containerName": "web",
+   "portName": "http-8000",
+   "isDebug": false,
+   "localAddress": "127.0.0.1",
+   "localPort": 20002,
+   "containerPort": 8000
+  }
+ ],
+ "apiServerPort": 20000
 }

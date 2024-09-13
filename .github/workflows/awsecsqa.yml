@@ -24,24 +24,22 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon ECS Dev Cluster
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "qa" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "qa" ]
 
 env:
   AWS_REGION: us-east-1                   # set this to your preferred AWS region, e.g. us-west-1
   WEB_REPOSITORY: template-web
-  DB_REPOSITORY: template-db
   ECS_SERVICE: template                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: DevCluster                 # set this to your Amazon ECS cluster name
+  ECS_CLUSTER: QACluster                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   WEB_CONTAINER_NAME: template-web           # set this to the name of the container in the
-  DB_CONTAINER_NAME: template-db                                             # containerDefinitions section of your task definition
 
 permissions:
   id-token: write
@@ -51,17 +49,17 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: development
+    environment: qa
 
     steps:
-    - name: Generate .env file
+    - name: Generate Github env variables 
       run: |
-        echo "DEBUG=True" > .env
-        echo "DB_NAME=template-db" >> .env
-        echo "DB_USER=${{ secrets.DB_USER }}" >> .env
-        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-        echo "DB_HOST=${{ secrets.DB_HOST }} >> .env
-        echo "DB_PORT=3306" >> .env
+        echo "DEBUG=False" > $GITHUB_ENV
+        echo "DB_NAME=template-db-qa" >> $GITHUB_ENV
+        echo "DB_USER=${{ secrets.QA_USER }}" >> $GITHUB_ENV
+        echo "DB_PASSWORD=${{ secrets.QA_PASSWORD }} >> $GITHUB_ENV
+        echo "DB_HOST=${{ secrets.QA_HOST }} >> $GITHUB_ENV
+        echo "DB_PORT=3306" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -95,17 +93,6 @@ jobs:
         docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$WEB_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$REGISTRY_ALIAS/$WEB_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    - name: Build, tag, and push image to Amazon ECR Public
-      id: build-image-db
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-        REGISTRY_ALIAS: j2a5t6s3
-        IMAGE_TAG: ${{ github.sha }}
-
-      run: |
-        docker build -f Containerfile-db -t $ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$REGISTRY_ALIAS/$DB_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
@@ -114,14 +101,7 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.WEB_CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
-
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def2
-      uses: aws-action/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        container-name: ${{ env.DB_CONTAINER_NAME }}
-        image: ${{ steps.build-image-db.outputs.image }}
+  
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
