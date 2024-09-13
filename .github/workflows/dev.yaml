@@ -1,0 +1,61 @@
+name: Push the Docker image to AWS ECR Repo
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+    inputs:
+      manual_ref:
+        type: string
+        description: The tag or hash that needs to be deployed
+
+jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:  
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          envkey_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+          envkey_STATIC_URL: ${{ secrets.STATIC_URL }}
+          envkey_STATIC_ROOT: ${{ secrets.STATIC_ROOT }}
+          directory: .
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        
+
+      - name: Get commit hash
+        id: get-commit-hash
+        run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
+
+      - name: Build, tag, and push docker image to Amazon ECR Public
+        id: build-image
+        env:
+          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+          ECR_REPOSITORY: template-dev
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          STATIC_URL: ${{ secrets.STATIC_URL }}
+          STATIC_ROOT: ${{ secrets.STATIC_ROOT }}
+        run: |
+          podman build -f Containerfile -t template-dev .
+          podman tag template-dev:latest 654654512735.dkr.ecr.us-east-1.amazonaws.com/template-dev:latest
+          podman push 654654512735.dkr.ecr.us-east-1.amazonaws.com/template-dev:latest
