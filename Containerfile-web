@@ -26,8 +26,9 @@ COPY ./template /app/
 RUN python3 manage.py makemigrations polls
 
 # Copy wait-for-it
-COPY wait-for-it.sh wait-for-it.sh
-RUN chmod +x wait-for-it.sh
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
 
-CMD ["./wait-for-it.sh", "localhost:3306", "--timeout=20", "--", "sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+EXPOSE 8000
 
+ENTRYPOINT ["/app/entrypoint.sh"]
