@@ -28,7 +28,7 @@ jobs:
           envkey_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
           envkey_STATIC_URL: ${{ secrets.STATIC_URL }}
           envkey_STATIC_ROOT: ${{ secrets.STATIC_ROOT }}
-          directory: ./template/mysite
+          directory: template/mysite
           file_name: .env
           fail_on_empty: false
           sort_keys: false
