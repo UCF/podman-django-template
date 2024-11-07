@@ -21,8 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARENT_DIR = Path(__file__).resolve().parent
 
 # Take the environment variables from .env file
-load_dotenv()
+env = environ.FileAwareEnv()
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -32,7 +33,7 @@ SECRET_KEY = 'django-insecure-_i_xqo-9_5%du03@lxqtkk&11r*21=y$tl()u#cd@eo55dh3-@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Debug set in .env
-DEBUG = os.getenv('DEBUG')
+DEBUG = env('DEBUG', bool, default=True)
 
 ALLOWED_HOSTS = ['*']
 
