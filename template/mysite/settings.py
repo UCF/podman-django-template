@@ -18,7 +18,7 @@ import environ
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARENT_DIR = Path(__file__).resolve().parent
 
 # Take the environment variables from .env file
