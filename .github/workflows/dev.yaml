@@ -21,6 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Generate Github env variables 
+        run: |
+          echo "DEBUG=False" > $GITHUB_ENV
+          echo "DEV_DATABASE_URL=${{ secrets.DEV_DATABASE_URL }} >> $GITHUB_ENV
+
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
