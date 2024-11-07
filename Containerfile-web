@@ -29,6 +29,6 @@ RUN python3 manage.py makemigrations polls
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
 
-EXPOSE 8000
+EXPOSE 80
 
 ENTRYPOINT ["/app/entrypoint.sh"]
