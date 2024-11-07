@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database settings moved to .env files
 
 DATABASES = {
-    'default': env.db('DEV_DATABASE_URL'),
+    'default': env('DEV_DATABASE_URL'),
 }
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
